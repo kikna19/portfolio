@@ -3,15 +3,31 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoiseComponent } from './shared/pages/noise/noise.component';
+import { MainComponent } from './main/main.component';
+import { HeaderComponent } from './shared/pages/header/header.component';
+import { MyFooterComponent } from './shared/pages/my-footer/my-footer.component';
+import {NgOptimizedImage} from "@angular/common";
+import { LandingComponent } from './shared/pages/landing/landing.component';
+import { TextInitDirective } from './shared/directives/text-init.directive';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NoiseComponent,
+    MainComponent,
+    HeaderComponent,
+    MyFooterComponent,
+    LandingComponent,
+    TextInitDirective
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        NgOptimizedImage
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })
