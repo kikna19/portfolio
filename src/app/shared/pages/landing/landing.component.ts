@@ -13,7 +13,6 @@ gsap.registerPlugin(ScrollTrigger);
   styleUrls: ['./landing.component.scss']
 })
 export class LandingComponent implements AfterViewInit {
-  @ViewChild('main', {static: true}) main: ElementRef<HTMLDivElement>;
   @ViewChild('cosmonaut', {static: false}) cosmonaut: ElementRef<HTMLDivElement>;
   @ViewChild('cosmonautContent', {static: false}) cosmonautContent: ElementRef<HTMLDivElement>;
   @ViewChild('msgText', {static: false}) msgText: ElementRef<HTMLParagraphElement>;
@@ -23,7 +22,7 @@ export class LandingComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     // this.animateCosmoMan();
     // this.animateText();
-    this.zoomInAnimation();
+    this.animateCosmoOnScroll();
   }
 
   private animateCosmoMan(): void {
@@ -36,11 +35,11 @@ export class LandingComponent implements AfterViewInit {
       transformOrigin: "center 303px 303px",
       rotation: '360',
       ...baseAnim,
-    },)
+    });
     gsap.to(this.cosmonautContent.nativeElement, {
       rotation: '-360',
       ...baseAnim
-    },)
+    });
   }
 
   private animateText(): void {
@@ -63,24 +62,15 @@ export class LandingComponent implements AfterViewInit {
     )
   }
 
-  private zoomInAnimation(): void {
-    gsap.to([
-      this.main.nativeElement,
-    ], {
+
+  private animateCosmoOnScroll(): void {
+    gsap.to(this.cosmonaut.nativeElement, {
       scrollTrigger: {
-        trigger: this.main.nativeElement,
-        markers: {
-          startColor: 'transparent',
-          endColor: 'transparent'
-        },
-        pin: true,
-        start: 10,
-        end: '+=1000',
-        scrub: true,
+        markers: true,
+        scrub: true
       },
-      scale: '+=2',
       opacity: 0,
+      display: 'none'
     })
   }
-
 }

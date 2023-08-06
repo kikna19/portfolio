@@ -6,7 +6,8 @@ module.exports = {
       fontFamily:{
         header: ['headerFont', 'sans-serif'],
         label: ['labelFont', 'sans-serif'],
-        msg: ['msgFont', 'sans-serif']
+        msg: ['msgFont', 'sans-serif'],
+        textHeader: ['textHeaderFont', 'sans-serif'],
       },
     },
   },

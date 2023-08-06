@@ -19,8 +19,6 @@ body::-webkit-scrollbar-thumb {
 body {
   margin: 0;
   box-sizing: border-box;
-  padding: 0 7.5rem;
-  background: #214C5D;
   color: white;
 
 }
@@ -28,6 +26,10 @@ body {
 @layer base {
   a {
     @apply hover:cursor-pointer;
+  }
+
+  .plr {
+    @apply pl-[7.5rem] pr-[7.5rem];
   }
 
   .main_color {
@@ -58,6 +60,11 @@ body {
   @font-face {
     font-family: 'msgFont';
     src: url('/assets/fonts/PressStart2P-Regular.ttf') format('truetype');
+  }
+
+  @font-face {
+    font-family: 'textHeaderFont';
+    src: url('/assets/fonts/Rubik80sFade-Regular.ttf') format('truetype');
   }
 }
 
