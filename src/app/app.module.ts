@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoiseComponent } from './shared/animations/noise/noise.component';
 import { MainComponent } from './main/main.component';
 import { HeaderComponent } from './shared/pages/header/header.component';
-import { MyFooterComponent } from './shared/pages/my-footer/my-footer.component';
+import { FooterComponent } from './shared/pages/footer/footer.component';
 import {NgOptimizedImage} from "@angular/common";
 import { LandingComponent } from './shared/pages/landing/landing.component';
 import { TextInitDirective } from './shared/directives/text/text-init.directive';
@@ -21,7 +21,7 @@ import { TextHeaderDirective } from './shared/directives/text/text-header.direct
     NoiseComponent,
     MainComponent,
     HeaderComponent,
-    MyFooterComponent,
+    FooterComponent,
     LandingComponent,
     TextInitDirective,
     IntroComponent,

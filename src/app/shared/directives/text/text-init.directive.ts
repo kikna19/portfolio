@@ -24,5 +24,4 @@ export class TextInitDirective implements OnInit {
     })
   }
 
-
 }

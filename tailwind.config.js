@@ -8,6 +8,7 @@ module.exports = {
         label: ['labelFont', 'sans-serif'],
         msg: ['msgFont', 'sans-serif'],
         textHeader: ['textHeaderFont', 'sans-serif'],
+        letter: ['letterFont', 'sans-serif'],
       },
     },
   },
