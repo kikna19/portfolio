@@ -20,8 +20,8 @@ export class LandingComponent implements AfterViewInit {
   private st = new SplitText({words: 1, chars: 1, spacing: "1rem"});
 
   ngAfterViewInit(): void {
-    // this.animateCosmoMan();
-    // this.animateText();
+    this.animateCosmoMan();
+    this.animateText();
     this.animateCosmoOnScroll();
   }
 
@@ -66,8 +66,8 @@ export class LandingComponent implements AfterViewInit {
   private animateCosmoOnScroll(): void {
     gsap.to(this.cosmonaut.nativeElement, {
       scrollTrigger: {
-        markers: true,
-        scrub: true
+        scrub: 3,
+        end: '500`',
       },
       opacity: 0,
       display: 'none'

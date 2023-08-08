@@ -14,6 +14,10 @@ export class TextInitDirective implements OnInit {
   }
 
   ngOnInit(): void {
+    this.textInit();
+  }
+
+  private textInit(): void {
     gsap.fromTo(this.el.nativeElement, {
       y: '200%',
     }, {
