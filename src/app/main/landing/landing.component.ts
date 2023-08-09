@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import gsap from "gsap";
 import {UntilDestroy} from "@ngneat/until-destroy";
-import {SplitText} from "../../../../assets/text-animation/splitText";
+import {SplitText} from "../../../assets/text-animation/splitText";
 import {ScrollTrigger} from "gsap/all";
 
 gsap.registerPlugin(ScrollTrigger);

@@ -1,10 +1,10 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, Output, ViewChild} from '@angular/core';
 import gsap from "gsap";
 import {SplitText} from "../../../../assets/text-animation/splitText";
-import {circular} from "../../animations/gsap/gsap";
-import {TextEnum} from "../../entity/text-enums/text.enum";
+import {circular} from "../../../shared/animations/gsap/gsap";
+import {TextEnum} from "../../../shared/entity/text-enums/text.enum";
 import {first, mergeMap, ObjectUnsubscribedError, of, Subscription, take, takeLast, tap, toArray} from "rxjs";
-import {ScrollService} from "../../service/scroll.service";
+import {ScrollService} from "../../../shared/service/scroll.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 
 

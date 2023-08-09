@@ -1,0 +1,29 @@
+<ng-container *ngIf="scrollHasDetected">
+  <section class="flex_cont h-full w-full relative mt-[7.5rem] select-none">
+    <aside class="w-1/2 h-full pt-[7.5rem] flex_box flex-col">
+      <span textHeaderAnimate class="font-textHeader text-[3rem] ">Introduction</span>
+      <div class="flex flex-row items-start justify-start w-full flex-wrap mt-[3rem] relative" >
+        <ng-container *ngFor="let text of textSVGs; index as i">
+          <svg *ngIf="i !== textSVGs.length - 1 && i !== textSVGs.length - 2" [style.width.px]="text.name.length * 20"
+               class="h-[60px]">
+            <path class="path" stroke-width="1" fill="none" stroke="white" [attr.d]="text.val"></path>
+          </svg>
+          <svg *ngIf="i === textSVGs.length - 2" [style.width.px]="text.name.length * 20"
+               class="h-[60px] absolute -bottom-[78px] right-0 cursor-pointer outline-0">
+            <path class="path" stroke-width="1" fill="none" stroke="white" [attr.d]="textSVGs[i].val"></path>
+          </svg>
+          <svg *ngIf="i === textSVGs.length - 1" [style.width.px]="text.name.length * 20"
+               class="h-[60px] absolute -bottom-[60px] right-0 cursor-pointer outline-0 flex justify-end items-end" [routerLink]="'/info'">
+            <path class="path" stroke-width="1" fill="none" stroke="white" [attr.d]="textSVGs[i].val"></path>
+          </svg>
+        </ng-container>
+      </div>
+    </aside>
+    <aside class="w-1/2">
+      <img id="introCosmoMan" ngSrc="/assets/images/intro.png" class="absolute right-0 top-[7.5rem]" alt="intro"
+           height="694"
+           width="552">
+    </aside>
+  </section>
+</ng-container>
+
