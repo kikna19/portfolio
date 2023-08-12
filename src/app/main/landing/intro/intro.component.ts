@@ -18,12 +18,13 @@ import {CosmomanComponent} from "../../../shared/animations/cosmoman/cosmoman.co
 @Component({
   selector: 'intro',
   templateUrl: './intro.component.html',
-  styleUrls: ['./intro.component.scss'],
+  styleUrls: ['./intro.component.scss']
 })
 export class IntroComponent implements AfterViewInit {
   @ViewChild('cosmomanElement', {read: ViewContainerRef}) cosmomanElement: ViewContainerRef;
   @ViewChild('mainElement') mainElement: ElementRef;
-  @Output() underScroll: EventEmitter<void> = new EventEmitter<void>();
+
+
   private readonly textEnum = TextEnum;
   public textSVGs: { name: string, val: string }[] = [];
   public scrollHasDetected: boolean = false;

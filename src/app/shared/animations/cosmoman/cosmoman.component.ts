@@ -16,7 +16,6 @@ gsap.registerPlugin(ScrollTrigger);
   selector: 'cosmoman',
   templateUrl: './cosmoman.component.html',
   styleUrls: ['./cosmoman.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CosmomanComponent implements OnInit, AfterViewInit {
   @ViewChild('cosmonaut', {static: false}) cosmonaut: ElementRef<HTMLDivElement>;
@@ -45,9 +44,7 @@ export class CosmomanComponent implements OnInit, AfterViewInit {
         opacity: .7,
         duration: 1.2,
         ease: 'elastic.inOut(6, .3)',
-        repeat: 2,
-      }).to(this.cosmonaut.nativeElement, {
-      opacity: 1
-    })
+        repeat: -1,
+      });
   }
 }

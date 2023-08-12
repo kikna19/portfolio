@@ -1,69 +1,112 @@
 import {
-    AfterViewInit,
-    ChangeDetectionStrategy, ChangeDetectorRef,
-    Component,
-    ComponentRef,
-    ElementRef,
-    OnInit,
-    ViewChild,
-    ViewContainerRef
+  AfterViewInit,
+  ChangeDetectionStrategy, ChangeDetectorRef,
+  Component,
+  ComponentRef,
+  ElementRef, EventEmitter, Input, OnChanges,
+  OnInit, Output, SimpleChanges,
+  ViewChild,
+  ViewContainerRef
 } from '@angular/core';
 import {SplitText} from "../../../../assets/text-animation/splitText";
 import {CosmomanComponent} from "../../../shared/animations/cosmoman/cosmoman.component";
 import gsap from "gsap";
+import {ScrollService} from "../../../shared/services/scroll/scroll.service";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
+import {
+  distinctUntilChanged,
+  filter,
+  first,
+  last,
+  map,
+  Observable,
+  Subscription,
+  take,
+  takeLast,
+  tap
+} from "rxjs";
 
+@UntilDestroy()
 @Component({
-    selector: 'greeting',
-    templateUrl: './greeting.component.html',
-    styleUrls: ['./greeting.component.scss'],
+  selector: 'greeting',
+  templateUrl: './greeting.component.html',
+  styleUrls: ['./greeting.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GreetingComponent implements OnInit, AfterViewInit {
-    @ViewChild('cosmomanElement', {read: ViewContainerRef}) cosmomanElement: ViewContainerRef;
-    @ViewChild('msgText', {static: false}) msgText: ElementRef<HTMLParagraphElement>;
-    @ViewChild('msgEndText', {static: false}) msgEndText: ElementRef<HTMLSpanElement>;
-    private st = new SplitText({words: 1, chars: 1, spacing: "1rem"});
+export class GreetingComponent implements OnInit, AfterViewInit, OnChanges {
+  @ViewChild('cosmomanElement', {read: ViewContainerRef}) cosmomanElement: ViewContainerRef;
+  @ViewChild('msgText', {static: false}) msgText: ElementRef<HTMLParagraphElement>;
+  @ViewChild('msgEndText', {static: false}) msgEndText: ElementRef<HTMLSpanElement>;
+
+  @Input() introCompOffsetTop: number = 0;
+
+  @Output() scrollPassed: EventEmitter<void> = new EventEmitter<void>();
 
 
-    constructor(
-        private viewContainerRef: ViewContainerRef,
-    ) {
-    }
+  private st = new SplitText({words: 1, chars: 1, spacing: "1rem"});
 
-    ngOnInit() {
-    }
 
-    ngAfterViewInit() {
-        this.createDynamicScrollingElement();
-    }
+  constructor(
+    private viewContainerRef: ViewContainerRef,
+    private scrollService: ScrollService,
+    private cdr: ChangeDetectorRef,
+  ) {
+  }
 
-    createDynamicScrollingElement(): void {
-        const dynamicElement: ComponentRef<CosmomanComponent> = this.viewContainerRef.createComponent(CosmomanComponent);
-        this.cosmomanElement.insert(dynamicElement.hostView);
-    }
+  ngOnInit(): void {
+  }
 
-    removeDynamicScrollingElement(): void {
-        if (this.cosmomanElement.length > 0)
-            this.cosmomanElement.remove(0)
-    }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['introCompOffsetTop'].currentValue)
+      this.scrollService.scroll$.pipe(
+        untilDestroyed(this),
+        tap((scrollTop: number) => {
+          if (scrollTop == 0) {
+            this.createDynamicScrollingElement();
+            this.cdr.markForCheck();
+          }
+        }),
+        map((scrollTop: number): boolean => scrollTop > this.introCompOffsetTop / 2),
+        distinctUntilChanged(),
+      ).subscribe((passed: boolean): void => {
+        if (passed)
+          this.removeDynamicScrollingElement();
+      });
+  }
 
-    animateText(): void {
-        gsap.fromTo(this.st.split([this.msgText.nativeElement]).chars,
-            {
-                opacity: 0,
-            },
-            {
-                duration: .5,
-                opacity: 1,
-                stagger: .07,
-                ease: "power1.out",
-                onComplete: () => {
-                    gsap.to(this.msgEndText.nativeElement, {
-                        visibility: 'visible',
-                        opacity: 1,
-                    })
-                }
-            },
-        )
+  ngAfterViewInit() {
+    this.createDynamicScrollingElement();
+    this.animateText();
+  }
 
-    }
+  createDynamicScrollingElement(): void {
+    const dynamicElement: ComponentRef<CosmomanComponent> = this.viewContainerRef.createComponent(CosmomanComponent);
+    this.cosmomanElement.insert(dynamicElement.hostView);
+  }
+
+  removeDynamicScrollingElement(): void {
+    if (this.cosmomanElement.length > 0)
+      this.cosmomanElement.remove(0)
+  }
+
+  animateText(): void {
+    gsap.fromTo(this.st.split([this.msgText.nativeElement]).chars,
+      {
+        opacity: 0,
+      },
+      {
+        duration: .5,
+        opacity: 1,
+        stagger: .07,
+        ease: "power1.out",
+        onComplete: () => {
+          gsap.to(this.msgEndText.nativeElement, {
+            visibility: 'visible',
+            opacity: 1,
+          })
+        }
+      },
+    )
+
+  }
 }

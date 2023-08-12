@@ -1,6 +1,8 @@
 <section class="section_cont">
- <greeting></greeting>
+ <greeting [introCompOffsetTop]="introCompOffsetTop"></greeting>
 </section>
-<section class="section_cont" #gela>
-  <intro></intro>
+<section class="section_cont" #introComp>
+  <ng-container *ngIf="scrollPassedGreetingComp">
+    <intro></intro>
+  </ng-container>
 </section>
