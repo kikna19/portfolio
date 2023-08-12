@@ -43,6 +43,10 @@ body {
   .flex_box {
     @apply flex items-center justify-center h-fit w-fit;
   }
+
+  .section_cont {
+    @apply block w-full plr h-[100vh];
+  }
 }
 
 

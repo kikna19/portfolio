@@ -16,6 +16,9 @@ import {BgComponent} from './shared/animations/bg/bg.component';
 import {TextHeaderDirective} from './shared/directives/text/text-header.directive';
 import {TextLetterDirective} from './shared/directives/text/text-letter.directive';
 import {FullIntroModule} from "./shared/pages/full-intro/full-intro.module";
+import { SkillsComponent } from './main/landing/skills/skills.component';
+import { CosmomanComponent } from './shared/animations/cosmoman/cosmoman.component';
+import { GreetingComponent } from './main/landing/greeting/greeting.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,9 @@ import {FullIntroModule} from "./shared/pages/full-intro/full-intro.module";
     BgComponent,
     TextHeaderDirective,
     TextLetterDirective,
+    SkillsComponent,
+    CosmomanComponent,
+    GreetingComponent,
   ],
   imports: [
     BrowserModule,
