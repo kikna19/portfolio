@@ -15,14 +15,7 @@ import {ScrollService} from "../../../shared/services/scroll/scroll.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {
   distinctUntilChanged,
-  filter,
-  first,
-  last,
   map,
-  Observable,
-  Subscription,
-  take,
-  takeLast,
   tap
 } from "rxjs";
 
