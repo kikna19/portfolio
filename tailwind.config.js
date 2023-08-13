@@ -9,6 +9,7 @@ module.exports = {
         msg: ['msgFont', 'sans-serif'],
         textHeader: ['textHeaderFont', 'sans-serif'],
         letter: ['letterFont', 'sans-serif'],
+        alien: ['alienFont', 'sans-serif'],
       },
     },
   },

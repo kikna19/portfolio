@@ -76,6 +76,11 @@ body {
     font-family: 'letterFont';
     src: url('/assets/fonts/Julee-Regular.ttf') format('truetype');
   }
+
+  @font-face {
+    font-family: 'alienFont';
+    src: url('/assets/fonts/Redressed-Regular.ttf') format('truetype');
+  }
 }
 
 
