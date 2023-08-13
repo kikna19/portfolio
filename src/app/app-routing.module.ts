@@ -11,6 +11,10 @@ const routes: Routes = [
       {
         path: '',
         component: LandingComponent,
+      },
+      {
+        path:'info',
+        loadChildren: () => import('../app/shared/pages/full-intro/full-intro.module').then(m => m.FullIntroModule)
       }
     ]
   },

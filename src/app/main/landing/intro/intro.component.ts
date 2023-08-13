@@ -10,7 +10,7 @@ import {
 import {TextEnum} from "../../../shared/entity/text-enums/text.enum";
 import {ScrollService} from "../../../shared/services/scroll/scroll.service";
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {filter, finalize, fromEvent, take} from "rxjs";
+import {distinctUntilChanged, filter, finalize, fromEvent, map, take, tap} from "rxjs";
 import {CosmomanComponent} from "../../../shared/animations/cosmoman/cosmoman.component";
 
 
@@ -20,14 +20,12 @@ import {CosmomanComponent} from "../../../shared/animations/cosmoman/cosmoman.co
   templateUrl: './intro.component.html',
   styleUrls: ['./intro.component.scss']
 })
-export class IntroComponent implements AfterViewInit {
+export class IntroComponent implements OnInit, AfterViewInit {
   @ViewChild('cosmomanElement', {read: ViewContainerRef}) cosmomanElement: ViewContainerRef;
-  @ViewChild('mainElement') mainElement: ElementRef;
-
+  @ViewChild('introComponent') introComponent: ElementRef;
 
   private readonly textEnum = TextEnum;
   public textSVGs: { name: string, val: string }[] = [];
-  public scrollHasDetected: boolean = false;
 
   constructor(
     private scrollService: ScrollService,
@@ -35,24 +33,36 @@ export class IntroComponent implements AfterViewInit {
   ) {
   }
 
-
-  ngAfterViewInit(): void {
-    const elementOffsetTop: number = this.mainElement.nativeElement.offsetTop;
-    this.scrollService.scroll$.pipe(
-      untilDestroyed(this),
-      filter(scrollTop => scrollTop > elementOffsetTop),
-      take(1)
-    ).subscribe((_: any) => {
-      this.scrollHasDetected = true;
-      this.createDynamicScrollingElement();
-    });
+  ngOnInit() {
     this.getSvgText();
   }
 
-  createDynamicScrollingElement(): void {
-    const dynamicElement: ComponentRef<CosmomanComponent> = this.viewContainerRef.createComponent(CosmomanComponent);
-    dynamicElement.instance.side = 'right';
-    this.cosmomanElement.insert(dynamicElement.hostView);
+  ngAfterViewInit(): void {
+    const elementOffsetTop: number = this.introComponent.nativeElement.offsetTop;
+    this.scrollService.scroll$.pipe(
+      untilDestroyed(this),
+      map(scrollTop => {
+        return scrollTop > elementOffsetTop / 1.5
+      }),
+      distinctUntilChanged(),
+    ).subscribe((passed: boolean): void => {
+      passed ?
+        this.createDynamicScrollingElement() :
+        this.removeDynamicScrollingElement()
+    });
+  }
+
+  private createDynamicScrollingElement(): void {
+    if (!this.cosmomanElement.length) {
+      const dynamicElement: ComponentRef<CosmomanComponent> = this.viewContainerRef.createComponent(CosmomanComponent);
+      dynamicElement.instance.side = 'right';
+      this.cosmomanElement.insert(dynamicElement.hostView);
+    }
+  }
+
+  private removeDynamicScrollingElement(): void {
+    if (this.cosmomanElement.length > 0)
+      this.cosmomanElement.remove(0)
   }
 
 

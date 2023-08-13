@@ -26,7 +26,7 @@ import {
   styleUrls: ['./greeting.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class GreetingComponent implements OnInit, AfterViewInit, OnChanges {
+export class GreetingComponent implements OnChanges, AfterViewInit {
   @ViewChild('cosmomanElement', {read: ViewContainerRef}) cosmomanElement: ViewContainerRef;
   @ViewChild('msgText', {static: false}) msgText: ElementRef<HTMLParagraphElement>;
   @ViewChild('msgEndText', {static: false}) msgEndText: ElementRef<HTMLSpanElement>;
@@ -34,7 +34,6 @@ export class GreetingComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() introCompOffsetTop: number = 0;
 
   @Output() scrollPassed: EventEmitter<void> = new EventEmitter<void>();
-
 
   private st = new SplitText({words: 1, chars: 1, spacing: "1rem"});
 
@@ -44,9 +43,6 @@ export class GreetingComponent implements OnInit, AfterViewInit, OnChanges {
     private scrollService: ScrollService,
     private cdr: ChangeDetectorRef,
   ) {
-  }
-
-  ngOnInit(): void {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -62,8 +58,10 @@ export class GreetingComponent implements OnInit, AfterViewInit, OnChanges {
         map((scrollTop: number): boolean => scrollTop > this.introCompOffsetTop / 2),
         distinctUntilChanged(),
       ).subscribe((passed: boolean): void => {
-        if (passed)
+        if (passed) {
           this.removeDynamicScrollingElement();
+          this.scrollPassed.emit();
+        }
       });
   }
 
@@ -72,17 +70,19 @@ export class GreetingComponent implements OnInit, AfterViewInit, OnChanges {
     this.animateText();
   }
 
-  createDynamicScrollingElement(): void {
-    const dynamicElement: ComponentRef<CosmomanComponent> = this.viewContainerRef.createComponent(CosmomanComponent);
-    this.cosmomanElement.insert(dynamicElement.hostView);
+  private createDynamicScrollingElement(): void {
+    if (!this.cosmomanElement.length) {
+      const dynamicElement: ComponentRef<CosmomanComponent> = this.viewContainerRef.createComponent(CosmomanComponent);
+      this.cosmomanElement.insert(dynamicElement.hostView);
+    }
   }
 
-  removeDynamicScrollingElement(): void {
+  private removeDynamicScrollingElement(): void {
     if (this.cosmomanElement.length > 0)
       this.cosmomanElement.remove(0)
   }
 
-  animateText(): void {
+  private animateText(): void {
     gsap.fromTo(this.st.split([this.msgText.nativeElement]).chars,
       {
         opacity: 0,

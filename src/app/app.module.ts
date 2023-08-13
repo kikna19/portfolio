@@ -19,6 +19,9 @@ import {FullIntroModule} from "./shared/pages/full-intro/full-intro.module";
 import { SkillsComponent } from './main/landing/skills/skills.component';
 import { CosmomanComponent } from './shared/animations/cosmoman/cosmoman.component';
 import { GreetingComponent } from './main/landing/greeting/greeting.component';
+import { SmoothScrollDirective } from './shared/directives/smooth-scroll/smooth-scroll.directive';
+import {MatButtonModule} from "@angular/material/button";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -36,13 +39,16 @@ import { GreetingComponent } from './main/landing/greeting/greeting.component';
     SkillsComponent,
     CosmomanComponent,
     GreetingComponent,
+    SmoothScrollDirective,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     NgOptimizedImage,
-    FullIntroModule
+    FullIntroModule,
+    MatButtonModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

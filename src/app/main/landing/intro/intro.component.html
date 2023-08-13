@@ -1,8 +1,7 @@
-<section class="flex_cont h-full w-full relative mt-[7.5rem] select-none"
-         #mainElement>
+<section class="flex_cont h-full w-full relative mt-[7.5rem] select-none" #introComponent>
   <aside class="w-1/2 h-full pt-[7.5rem] flex_box flex-col">
     <span textHeaderAnimate class="font-textHeader text-[3rem]">Introduction</span>
-    <div class="flex flex-row items-start justify-start w-full flex-wrap mt-[3rem] relative">
+    <div class="flex flex-row items-start justify-start w-full flex-wrap mt-[3rem] relative" textLetter>
       <ng-container *ngFor="let text of textSVGs; index as i">
         <svg *ngIf="i !== textSVGs.length - 1 && i !== textSVGs.length - 2" [style.width.px]="text.name.length * 20"
              class="h-[60px]">

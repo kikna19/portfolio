@@ -4,7 +4,7 @@ import {FullIntroComponent} from "./full-intro.component";
 
 const roots: Routes = [
   {
-    path: 'info',
+    path: '',
     component: FullIntroComponent
   }
 ]

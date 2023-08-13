@@ -8,4 +8,5 @@ import {UntilDestroy} from "@ngneat/until-destroy";
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent {
+
 }
