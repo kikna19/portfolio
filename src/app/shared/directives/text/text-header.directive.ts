@@ -23,21 +23,23 @@ export class TextHeaderDirective implements OnInit {
 
   private textAnimate(): void {
     const chars: Node[] = this.st.split([this.el.nativeElement]).chars;
-    let randomChar: number;
-    let randomChars: Set<number> = new Set<number>([]);
-    for (let i = 0; i <= chars.length; i++) {
-      randomChar = Math.floor(Math.random() * 13);
-      randomChars.add(randomChar)
+    const randomChars = Array.from({length: chars.length}, (_, i) => i);
+
+    for (let i = randomChars.length; i > 0; i--) {
+      const j = Math.floor(Math.random() * i + 1);
+      [randomChars[i], randomChars[j]] = [randomChars[j], randomChars[i]]
     }
+
     randomChars.forEach(i => {
       const jumpText = gsap.to(chars[i], {
         delay: (): number => {
-          return i / 6;
+          return i / 4;
         },
-        y: -40,
+        y: -15,
         onUpdate: (): void => {
           circular(jumpText)
-        }
+        },
+        ease: 'sine.inOut'
       })
     })
   }
